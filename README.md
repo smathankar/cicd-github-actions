@@ -1,1 +1,1 @@
-# demo-github-actions
+# cicd-github-actions
