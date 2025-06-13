@@ -43,28 +43,27 @@ jobs:
           mkdir -p plan
           mv tfplan plan/
         # Save as artifact for next job
+
       - name: Upload Plan Artifact
         uses: actions/upload-artifact@v4
         with:
           name: tfplan
           path: plan/tfplan
-          retention-days: 1
 
-      - name: Upload Terraform Lock File
+      - name: Upload Terraform Lock & Init Files
         uses: actions/upload-artifact@v4
         with:
           name: terraform-lock
           path: |
             .terraform.lock.hcl
-            .terraform
-
+            .terraform/**/*
 
   terraform-apply:
-    name: Manual Approval & Terraform Apply
+    name: Terraform Apply
     runs-on: ubuntu-latest
     needs: terraform-plan
     environment:
-      name: production  # Set reviewers in GitHub UI under repo → Settings → Environments
+      name: ${{ github.event.inputs.environment }}
     permissions:
       contents: read
 
@@ -74,13 +73,16 @@ jobs:
       AWS_REGION: ${{ secrets.AWS_REGION }}
 
     steps:
-      - name: Download Plan Artifact
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download Plan
         uses: actions/download-artifact@v4
         with:
           name: tfplan
           path: .
 
-      - name: Download Lock File and .terraform
+      - name: Download Terraform Lock/Init
         uses: actions/download-artifact@v4
         with:
           name: terraform-lock
