@@ -42,6 +42,7 @@ jobs:
         run: |
           mkdir -p plan
           mv tfplan plan/
+          chmod 755 .terraform.lock.hcl
           
         # Save as artifact for next job
 
