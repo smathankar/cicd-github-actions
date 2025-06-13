@@ -74,6 +74,7 @@ jobs:
         with:
           name: terraform-lock
           path: .terraform.lock.hcl
+          include-hidden-files: true
       - name: Execute Shell Command
         run: |
           echo "Listing files..."
