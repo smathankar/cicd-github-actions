@@ -41,7 +41,10 @@ jobs:
         id: save-plan
         run: |
           mkdir -p plan
+          mkdir -p lockfile
           mv tfplan plan/
+          mv .terraform.lock.hcl lockfile/
+          
         # Save as artifact for next job
 
       - name: Upload Plan Artifact
@@ -62,8 +65,8 @@ jobs:
         if: ${{ hashFiles('.terraform.lock.hcl') != '' }}
         uses: actions/upload-artifact@v4
         with:
-          name: 'terraform-lock'
-          path: ./.terraform.lock.hcl
+          name: terraform-lock
+          path: lockfile/.terraform.lock.hcl
       - name: Execute Shell Command
         run: |
           echo "Listing files..."
@@ -102,7 +105,7 @@ jobs:
       - name: Download .terraform.lock.hcl
         uses: actions/download-artifact@v4
         with:
-          name: 'terraform-lock'
+          name: terraform-lock
           path: .
     
       - name: Setup Terraform
