@@ -1,9 +1,9 @@
 name: Terraform Deploy to AWS
 
 on:
-  push:
-    branches:
-      - main   # or your preferred branch
+  # push:
+  #   branches:
+  #     - main   # or your preferred branch
   workflow_dispatch:  # Allow manual trigger from GitHub UI
 
 jobs:
