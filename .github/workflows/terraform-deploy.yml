@@ -22,9 +22,15 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: List objects in S3 backend bucket
+        
+      - name: Create S3 Bucket for State file
         run: |
-          aws s3 ls
+          bucket_name=tf_state_lock_$(tr -dc A-Za-z0-9 </dev/urandom | head -c 8)
+          aws s3api create-bucket \
+          --bucket $bucket_name
+          aws s3api put-bucket-versioning \
+          --bucket $bucket_name \
+          --versioning-configuration Status=Enabled
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
