@@ -64,7 +64,7 @@ jobs:
       - name: Upload terraform lock file
         uses: actions/upload-artifact@v4
         with:
-          name: terraform-lock
+          name: .terraform.lock.hcl
           path: tflock/.terraform.lock.hcl
       - name: Execute Shell Command
         run: |
@@ -107,13 +107,17 @@ jobs:
         run: |
           echo "Listing files..."
           ls -la
+      - name: Debug - List files
+        run: ls -R
 
       - name: Download terraform-lock
         uses: actions/download-artifact@v4
         with:
-          name: terraform-lock
+          name: .terraform.lock.hcl
           path: .
-    
+      - name: Debug - List files
+        run: ls -R
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
         with:
