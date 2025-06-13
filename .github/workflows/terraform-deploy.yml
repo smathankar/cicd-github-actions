@@ -58,7 +58,8 @@ jobs:
       #       .terraform.lock.hcl
       #       .terraform/**/*
       - name: Upload .terraform.lock.hcl (if exists)
-        if: ${{ hashFiles('.terraform.lock.hcl') != '' }}
+        # if: ${{ hashFiles('.terraform.lock.hcl') != '' }}
+        if: ${{ hashFiles('**/.terraform.lock.hcl') != '' }}
         uses: actions/upload-artifact@v4
         with:
           name: terraform-lock
