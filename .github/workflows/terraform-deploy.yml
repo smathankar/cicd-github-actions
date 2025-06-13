@@ -50,14 +50,20 @@ jobs:
           name: tfplan
           path: plan/tfplan
 
-      - name: Upload Terraform Lock & Init Files
+      # - name: Upload Terraform Lock & Init Files
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: terraform-lock
+      #     path: |
+      #       .terraform.lock.hcl
+      #       .terraform/**/*
+      - name: Upload .terraform.lock.hcl (if exists)
+        if: ${{ hashFiles('.terraform.lock.hcl') != '' }}
         uses: actions/upload-artifact@v4
         with:
           name: terraform-lock
-          path: |
-            .terraform.lock.hcl
-            .terraform/**/*
-
+          path: .terraform.lock.hcl
+        
   terraform-apply:
     name: Terraform Apply
     runs-on: ubuntu-latest
@@ -82,7 +88,7 @@ jobs:
           name: tfplan
           path: .
 
-      - name: Download Terraform Lock/Init
+      - name: Download .terraform.lock.hcl
         uses: actions/download-artifact@v4
         with:
           name: terraform-lock
