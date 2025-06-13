@@ -99,6 +99,11 @@ jobs:
           name: .terraform.lock.hcl
           path: .
 
+      - name: Execute Shell Command
+        run: |
+          echo "Listing files..."
+          ls -la
+    
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
         with:
