@@ -62,8 +62,8 @@ jobs:
         if: ${{ hashFiles('.terraform.lock.hcl') != '' }}
         uses: actions/upload-artifact@v4
         with:
-          name: .terraform.lock.hcl
-          path: .terraform.lock.hcl
+          name: '.terraform.lock.hcl'
+          path: '.terraform.lock.hcl'
       - name: Execute Shell Command
         run: |
           echo "Listing files..."
@@ -101,7 +101,7 @@ jobs:
       - name: Download .terraform.lock.hcl
         uses: actions/download-artifact@v4
         with:
-          name: .terraform.lock.hcl
+          name: '.terraform.lock.hcl'
           path: .
     
       - name: Setup Terraform
