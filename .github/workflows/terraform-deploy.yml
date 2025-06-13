@@ -41,9 +41,8 @@ jobs:
         id: save-plan
         run: |
           mkdir -p plan
-          mkdir -p lockfile
           mv tfplan plan/
-          mv .terraform.lock.hcl lockfile/
+
           
         # Save as artifact for next job
 
