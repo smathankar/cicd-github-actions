@@ -37,7 +37,6 @@ jobs:
       - name: Terraform Plan
         run: terraform plan -out=tfplan
 
-
       - name: Save Terraform Plan
         id: save-plan
         run: |
@@ -50,6 +49,15 @@ jobs:
           name: tfplan
           path: plan/tfplan
           retention-days: 1
+
+      - name: Upload Terraform Lock File
+        uses: actions/upload-artifact@v4
+        with:
+          name: terraform-lock
+          path: |
+            .terraform.lock.hcl
+            .terraform
+
 
   terraform-apply:
     name: Manual Approval & Terraform Apply
@@ -70,6 +78,12 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: tfplan
+          path: .
+
+      - name: Download Lock File and .terraform
+        uses: actions/download-artifact@v4
+        with:
+          name: terraform-lock
           path: .
 
       - name: Setup Terraform
