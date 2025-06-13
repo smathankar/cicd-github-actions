@@ -58,7 +58,17 @@ jobs:
       #     path: |
       #       .terraform.lock.hcl
       #       .terraform/**/*
-      - name: Upload terraform lock file
+      - name: Check lock file exists (debug)
+        run: |
+          echo "Current directory: $(pwd)"
+          echo "List files:"
+          ls -la
+          echo "Find lock file:"
+          find . -name ".terraform.lock.hcl"
+          echo "Hash: ${{ hashFiles('.terraform.lock.hcl') }}"
+      
+      - name: Upload Terraform Lock File
+        if: ${{ hashFiles('.terraform.lock.hcl') != '' }}
         uses: actions/upload-artifact@v4
         with:
           name: terraform-lock
