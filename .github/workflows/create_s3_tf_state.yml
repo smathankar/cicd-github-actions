@@ -29,11 +29,11 @@ jobs:
         # id: bucket
         run: |
           bucket_name=tf_state_lock_$(tr -dc A-Za-z0-9 </dev/urandom | head -c 8)
-          aws s3api create-bucket \
-          --bucket $bucket_name
-          aws s3api put-bucket-versioning \
-          --bucket $bucket_name \
-          --versioning-configuration Status=Enabled
+          # aws s3api create-bucket \
+          # --bucket $bucket_name
+          # aws s3api put-bucket-versioning \
+          # --bucket $bucket_name \
+          # --versioning-configuration Status=Enabled
           echo "bucket_name=$bucket_name" > var.env
 
       - name: Upload bucket name as artifact
