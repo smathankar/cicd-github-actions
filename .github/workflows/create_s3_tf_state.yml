@@ -11,8 +11,8 @@ jobs:
   configure-terraform-backend:
     name: Deploy S3 for TF Backend
     runs-on: ubuntu-latest
-    outputs:
-      bucket_name: ${{ steps.bucket.outputs.bucket_name }}
+    # outputs:
+    #   bucket_name: ${{ steps.bucket.outputs.bucket_name }}
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -26,7 +26,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Create S3 Bucket for State file
-        id: bucket
+        # id: bucket
         run: |
           bucket_name=tf_state_lock_$(tr -dc A-Za-z0-9 </dev/urandom | head -c 8)
           aws s3api create-bucket \
