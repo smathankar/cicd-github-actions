@@ -7,6 +7,42 @@ on:
   workflow_dispatch:  # Allow manual trigger from GitHub UI
 
 jobs:
+  create-terraform-backend:
+    name: Terraform Create Backend
+    runs-on: ubuntu-latest
+
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_REGION: ${{ secrets.AWS_REGION }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Fetch Bucket Name from SSM Parameter
+        run: |
+          Bucket_VALUE=$(aws ssm get-parameter \
+            --name "tf_state_bucket_name" \
+            --with-decryption \
+            --query "Parameter.Value" \
+            --output text)
+            
+          echo "bucket_name=$Bucket_VALUE" >> $GITHUB_ENV
+
+      - name: Generate backend file
+        run: |
+          cat > backend.tf <<EOF
+          terraform {  
+            backend "s3" {  
+              bucket       = "$bucket_name"
+              key          = "terraform.tfstate"
+              region       = ${{ secrets.AWS_REGION }}
+              encrypt      = true  
+              use_lockfile = true
+            }  
+          }
+          EOF
 
   terraform-plan:
     name: Terraform Init & Plan
@@ -45,7 +81,7 @@ jobs:
       - name: Terraform Init with S3 Backend
         run: |
           terraform init \
-            -backend-config="bucket=${{ vars.state_bucket_name }}" \
+            -backend-config="bucket=$bucket_name" \
             -backend-config="key=terraform.tfstate" \
             -backend-config="region=${{ secrets.AWS_REGION }}"
 
@@ -127,7 +163,7 @@ jobs:
       - name: Terraform Init with S3 Backend
         run: |
           terraform init \
-            -backend-config="bucket=${{ vars.state_bucket_name }}" \
+            -backend-config="bucket=$bucket_name" \
             -backend-config="key=terraform.tfstate" \
             -backend-config="region=${{ secrets.AWS_REGION }}"
 
