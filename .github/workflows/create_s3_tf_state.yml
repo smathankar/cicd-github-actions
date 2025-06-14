@@ -41,3 +41,5 @@ jobs:
         with:
           name: bucket-name-env-vars
           path: var.env
+      - name: Debug - List files
+        run: ls -R
