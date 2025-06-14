@@ -27,7 +27,7 @@ jobs:
       - name: Download bucket variable artifact
         uses: actions/download-artifact@v4
         with:
-          name: env-vars
+          name: bucket-name-env-vars
 
       - name: Load bucket variable
         run: |
