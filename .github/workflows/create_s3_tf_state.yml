@@ -25,7 +25,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Create S3 Bucket for State file
+      - name: Create S3 Bucket and SSM Parameter for State file
         # id: bucket
         run: |
           bucket_name=tf-state-lock-$(tr -dc a-z0-9 </dev/urandom | head -c 8)-bucket
