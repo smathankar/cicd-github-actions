@@ -1,3 +1,3 @@
 provider "aws" {
-  region = var.target_account_region
+  region = var.aws_region
 }
