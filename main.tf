@@ -4,7 +4,7 @@ resource "aws_s3_bucket" "my_bucket" {
   acl    = "private"
   tags = {
     Name        = var.bucket_name
-    Environment = "test"
+    Environment = "test1"
     Project     = "Terraform"
     Owner       = "DevOpsTeam"
   }
