@@ -14,7 +14,7 @@ jobs:
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      AWS_REGION: ${{ secrets.AWS_REGION }}
+      AWS_REGION: ${{ vars.AWS_REGION }}
 
     outputs:
       tfplan-path: ${{ steps.save-plan.outputs.tfplan }}
@@ -43,7 +43,7 @@ jobs:
           terraform init \
             -backend-config="bucket=$bucket_name" \
             -backend-config="key=terraform.tfstate" \
-            -backend-config="region=${{ secrets.AWS_REGION }}" \
+            -backend-config="region=${{ vars.AWS_REGION }}" \
             -backend-config="encrypt=true" \
             -backend-config="use_lockfile=true"
 
@@ -81,7 +81,7 @@ jobs:
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      AWS_REGION: ${{ secrets.AWS_REGION }}
+      AWS_REGION: ${{ vars.AWS_REGION }}
 
     steps:
       - name: Checkout repository
@@ -117,7 +117,7 @@ jobs:
           terraform init \
             -backend-config="bucket=$bucket_name" \
             -backend-config="key=terraform.tfstate" \
-            -backend-config="region=${{ secrets.AWS_REGION }}" \
+            -backend-config="region=${{ vars.AWS_REGION }}" \
             -backend-config="encrypt=true" \
             -backend-config="use_lockfile=true"
             
