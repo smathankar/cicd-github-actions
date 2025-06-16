@@ -83,7 +83,9 @@ jobs:
           terraform init \
             -backend-config="bucket=$bucket_name" \
             -backend-config="key=terraform.tfstate" \
-            -backend-config="region=${{ secrets.AWS_REGION }}"
+            -backend-config="region=${{ secrets.AWS_REGION }}" \
+            -backend-config="encrypt=true" \
+            -backend-config="use_lockfile=true"
 
       - name: Terraform Validate
         run: terraform validate
@@ -166,7 +168,9 @@ jobs:
             -backend-config="bucket=$bucket_name" \
             -backend-config="key=terraform.tfstate" \
             -backend-config="region=${{ secrets.AWS_REGION }}"
-
+            -backend-config="encrypt=true" \
+            -backend-config="use_lockfile=true"
+            
       - name: Terraform Apply
         run: terraform apply -auto-approve tfplan
 
