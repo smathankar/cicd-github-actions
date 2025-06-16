@@ -26,7 +26,7 @@ jobs:
       - name: Fetch Bucket Name from SSM Parameter
         run: |
           Bucket_VALUE=$(aws ssm get-parameter \
-            --name "${{ vars.ssm_parameter_name_backend }}" \
+            --name "${{ vars.SSM_PARAMETER_NAME_BACKEND }}" \
             --with-decryption \
             --query "Parameter.Value" \
             --output text)
@@ -90,7 +90,7 @@ jobs:
       - name: Fetch Bucket Name from SSM Parameter
         run: |
           Bucket_VALUE=$(aws ssm get-parameter \
-            --name "${{ vars.ssm_parameter_name_backend }}" \
+            --name "${{ vars.SSM_PARAMETER_NAME_BACKEND }}" \
             --with-decryption \
             --query "Parameter.Value" \
             --output text)
