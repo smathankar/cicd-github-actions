@@ -28,7 +28,7 @@ jobs:
       - name: Create S3 Bucket for State file
         # id: bucket
         run: |
-          bucket_name=tf_state_lock_$(tr -dc A-Za-z0-9 </dev/urandom | head -c 8)_bucket
+          bucket_name=tf-state-lock-$(tr -dc a-z0-9 </dev/urandom | head -c 8)-bucket
           echo "creating $bucket_name ..."
           aws s3api create-bucket \
           --bucket $bucket_name
