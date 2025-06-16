@@ -38,7 +38,7 @@ jobs:
           --versioning-configuration Status=Enabled
           echo "creating SSM Parameter to store bucket name"
           aws ssm put-parameter \
-            --name "tf_state_bucket_name" \
+            --name "${{ vars.ssm_parameter_name_backend }}" \
             --value $bucket_name \
             --type "String" \
             --overwrite
